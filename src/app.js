@@ -28,9 +28,10 @@ const handleResize = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(image, xStart, yStart, renderW, renderH);
 
-  // ctx.globalCompositeOperation = "overlay";
-  // ctx.fillStyle = "#FFFFFF60";
-  // ctx.fillRect(xStart, yStart, renderW, renderH);
+  // Blending mode test
+  ctx.globalCompositeOperation = "overlay";
+  ctx.fillStyle = "#FFFFFF60";
+  ctx.fillRect(xStart, yStart, renderW, renderH);
 };
 
 const handleCanvasLoad = () => {
