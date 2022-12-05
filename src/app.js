@@ -1,45 +1,35 @@
 const canvas = document.querySelector("#canvasElement");
 const ctx = canvas.getContext("2d");
 const image = new Image();
-
-const handleResize = () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const imgRatio = image.width / image.height;
-  const winRatio = window.innerWidth / window.innerHeight;
-  let renderW, renderH, xStart, yStart;
-
-  if (imgRatio < winRatio) {
-    renderW = image.width * (window.innerHeight / image.height);
-    renderH = window.innerHeight;
-    xStart = (window.innerWidth - renderW) / 2;
-    yStart = 0;
-  } else if (imgRatio > winRatio) {
-    renderW = window.innerWidth;
-    renderH = image.height * (window.innerWidth / image.width);
-    xStart = 0;
-    yStart = (window.innerHeight - renderH) / 2;
-  } else {
-    renderW = window.innerWidth;
-    renderH = window.innerHeight;
-    xStart = 0;
-    yStart = 0;
-  }
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(image, xStart, yStart, renderW, renderH);
-
-  // Blending mode test
-  ctx.globalCompositeOperation = "overlay";
-  ctx.fillStyle = "#FFFFFF60";
-  ctx.fillRect(xStart, yStart, renderW, renderH);
+image.src = "./assets/europeana.jpg";
+let isLoaded = false;
+let stageWidth = 0;
+let stageHeight = 0;
+const imgPos = {
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
 };
 
-const handleCanvasLoad = () => {
-  image.src = "./assets/europeana.jpg";
+const handleResize = () => {
+  // drawImage 초기화
+  if (isLoaded) {
+    handleDraw();
+  }
+};
+
+const handleDraw = () => {
+  // ctx.drawImage();
+};
+
+const handleLoad = () => {
   image.onload = () => {
+    isLoaded = true;
     handleResize();
+    handleDraw();
   };
 };
 
-window.addEventListener("DOMContentLoaded", handleCanvasLoad);
+window.addEventListener("DOMContentLoaded", handleLoad);
 window.addEventListener("resize", handleResize);
