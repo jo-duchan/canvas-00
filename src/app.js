@@ -5,6 +5,8 @@ image.src = "./assets/europeana.jpg";
 let isLoaded = false;
 let stageWidth = 0;
 let stageHeight = 0;
+let objectFit = "fill";
+// let objectFit = "fit";
 const pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
 const imgPos = {
   x: 0,
@@ -37,11 +39,25 @@ const handleDraw = () => {
   imgPos.height = stageHeight;
 
   if (imgRatio > stageRatio) {
-    imgPos.width = Math.round(image.width * (stageHeight / image.height));
-    imgPos.x = Math.round((stageWidth - imgPos.width) / 2);
+    if (objectFit === "fill") {
+      imgPos.width = Math.round(image.width * (stageHeight / image.height));
+      imgPos.x = Math.round((stageWidth - imgPos.width) / 2);
+      imgPos.y = 0;
+    } else {
+      imgPos.height = Math.round(image.height * (stageWidth / image.width));
+      imgPos.x = 0;
+      imgPos.y = Math.round((stageHeight - imgPos.height) / 2);
+    }
   } else {
-    imgPos.height = Math.round(image.height * (stageWidth / image.width));
-    imgPos.y = Math.round((stageHeight - imgPos.height) / 2);
+    if (objectFit === "fill") {
+      imgPos.height = Math.round(image.height * (stageWidth / image.width));
+      imgPos.x = 0;
+      imgPos.y = Math.round((stageHeight - imgPos.height) / 2);
+    } else {
+      imgPos.width = Math.round(image.width * (stageHeight / image.height));
+      imgPos.x = Math.round((stageWidth - imgPos.width) / 2);
+      imgPos.y = 0;
+    }
   }
 
   ctx.clearRect(0, 0, imgPos.width, imgPos.height);
